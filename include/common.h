@@ -7,8 +7,9 @@
 #define APP_HEIGHT 800
 #define APP_TITLE "TileEditor"
 #define APP_FONT "assets/JetBrainMono.ttf"
+#define FONT_SIZE 20
 
-#define GRID_WIDTH 1000
+#define GRID_WIDTH 800
 #define GRID_HEIGHT 800
 #define TILE_SIZE 50
 

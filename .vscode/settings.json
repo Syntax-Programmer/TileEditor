@@ -1,0 +1,83 @@
+{
+    "workbench.colorTheme": "GitHub Dark Default",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.productIconTheme": "fluent-icons",
+    "files.autoSave": "afterDelay",
+    "editor.fontFamily": "JetBrains Mono",
+    "editor.renderWhitespace": "trailing",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "debug.terminal.clearBeforeReusing": true,
+    "editor.fontLigatures": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "powermode.combo.location": "off",
+    "powermode.combo.counterEnabled": "hide",
+    "powermode.shake.enabled": false,
+    "editor.suggest.insertMode": "replace",
+    "window.menuBarVisibility": "compact",
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "cSpell.userWords": [
+        "Anand"
+    ],
+    "editor.formatOnType": true,
+    "workbench.editorAssociations": {
+        "*.pyc": "default"
+    },
+    "tabnine.experimentalAutoImports": true,
+    "editor.inlineSuggest.suppressSuggestions": true,
+    "cmake.options.advanced": {
+
+        "build": {
+            "statusBarVisibility": "visible"
+        },
+        "launch": {
+            "statusBarVisibility": "visible"
+        },
+        "debug": {
+            "statusBarVisibility": "visible"
+        }
+    },
+    "code-runner.runInTerminal": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "terminal.integrated.cursorStyle": "line",
+    "editor.unicodeHighlight.invisibleCharacters": false,
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "workbench.startupEditor": "none",
+    "sourcery.codeLens": true,
+    "workbench.editor.empty.hint": "hidden",
+    "editor.minimap.autohide": true,
+    "editor.minimap.renderCharacters": false,
+    "editor.cursorBlinking": "smooth",
+    "editor.defaultFormatter": "ms-vscode.cpptools",
+    "workbench.activityBar.location": "top",
+    "editor.fontSize": 12,
+    "editor.wordWrap": "on",
+    "python.analysis.typeCheckingMode": "standard",
+    "editor.cursorStyle": "line",
+    "workbench.sideBar.location": "right",
+    "cSpell.words": [
+        "GLFW",
+        "keysym",
+        "OPENGL",
+        "SDLK",
+        "Wwindow"
+    ],
+    "C_Cpp.formatting": "default",
+    "C_Cpp.vcFormat.indent.preserveComments": true,
+    "editor.tabSize": 4,
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.tabCompletion": "on",
+    "C_Cpp.default.compilerPath": "C:\\MinGW\\bin\\gcc.exe",
+    "files.associations": {
+        "map_generator.h": "c",
+        "global_consts.h": "c"
+    },
+    "[c]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+    },
+    "C_Cpp.vcFormat.indent.braces": true,
+    "C_Cpp.vcFormat.indent.accessSpecifiers": true,
+    "C_Cpp.vcFormat.indent.caseContentsWhenBlock": true,
+    "C_Cpp.vcFormat.indent.caseLabels": true,
+}

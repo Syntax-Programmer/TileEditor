@@ -3,11 +3,10 @@
 static void RenderGrid(SDL_Renderer *renderer,
                        Struct_TileHashNode **tile_hash_arr,
                        int32_t move_x_offset, int32_t move_y_offset);
-static void RenderNumInputWidget(SDL_Renderer *renderer,
-                                 Struct_NumInputWidget *pNum_input_widget);
+
 static void
-RenderSelectedColorState(SDL_Renderer *renderer,
-                         Struct_SelectedColorState *pSelected_color_state);
+RenderInputWidgets(SDL_Renderer *renderer,
+                   const Struct_InputWidgetState *pInput_widget_state);
 
 static void RenderGrid(SDL_Renderer *renderer,
                        Struct_TileHashNode **tile_hash_arr,
@@ -31,32 +30,31 @@ static void RenderGrid(SDL_Renderer *renderer,
   }
 }
 
-static void RenderNumInputWidget(SDL_Renderer *renderer,
-                                 Struct_NumInputWidget *pNum_input_widget) {
-  if (pNum_input_widget->widget_texture) {
-    SDL_RenderCopy(renderer, pNum_input_widget->widget_texture, NULL,
-                   &pNum_input_widget->widget_pos);
+static void
+RenderInputWidgets(SDL_Renderer *renderer,
+                   const Struct_InputWidgetState *pInput_widget_state) {
+  for (int i = 0; i < MAX_WIDGETS; i++) {
+    if (pInput_widget_state->widgets[i].texture) {
+      SDL_RenderCopy(renderer, pInput_widget_state->widgets[i].texture, NULL,
+                     &pInput_widget_state->widgets[i].pos);
+    }
   }
 }
 
-static void
-RenderSelectedColorState(SDL_Renderer *renderer,
-                         Struct_SelectedColorState *pSelected_color_state) {
-  SDL_SetRenderDrawColor(renderer, pSelected_color_state->r.value,
-                         pSelected_color_state->g.value,
-                         pSelected_color_state->b.value, 255);
-  SDL_RenderFillRect(renderer, &pSelected_color_state->color_rect);
-  RenderNumInputWidget(renderer, &pSelected_color_state->r);
-  RenderNumInputWidget(renderer, &pSelected_color_state->g);
-  RenderNumInputWidget(renderer, &pSelected_color_state->b);
-}
-
 void Render(SDL_Renderer *renderer, Struct_TileHashNode **tile_hash_arr,
-            Struct_SelectedColorState *pSelected_color_state,
+            const Struct_InputWidgetState *pInput_widget_state,
             int32_t move_x_offset, int32_t move_y_offset) {
   SDL_RenderClear(renderer);
+
   RenderGrid(renderer, tile_hash_arr, move_x_offset, move_y_offset);
-  RenderSelectedColorState(renderer, pSelected_color_state);
+  RenderInputWidgets(renderer, pInput_widget_state);
+
+  SDL_SetRenderDrawColor(
+      renderer, pInput_widget_state->widgets[R_WIDGET_INDEX].Value.int_val,
+      pInput_widget_state->widgets[G_WIDGET_INDEX].Value.int_val,
+      pInput_widget_state->widgets[B_WIDGET_INDEX].Value.int_val, 255);
+  SDL_RenderFillRect(renderer, &COLOR_RECT);
+
   SDL_SetRenderDrawColor(renderer, WHITISH, 255);
   SDL_RenderPresent(renderer);
 }

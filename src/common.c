@@ -7,21 +7,21 @@ void Logger(Enum_StatusCodes *pStatus_codes,
   if (extra_logs_callback) {
     callback_logs = extra_logs_callback();
     if (!callback_logs) {
-      callback_logs = "No function callbacks provided.\n";
+      callback_logs = "No function callbacks provided.";
     }
   }
 
   if (!logs) {
-    logs = "No logs provided.\n";
+    logs = "No logs provided.";
   }
 
   if (!output_stream) {
-    output_stream = stderr;
+    output_stream = OUTPUT_LOG_STREAM;
   }
 
   fprintf(output_stream, "\nLOGS:\n");
-  fprintf(output_stream, "  FUNCTION CALLBACK'S LOGS:\n    %s", callback_logs);
-  fprintf(output_stream, "  LOGS:\n    %s", logs);
+  fprintf(output_stream, "  FUNCTION CALLBACK'S LOGS:\n    %s\n", callback_logs);
+  fprintf(output_stream, "  LOGS:\n    %s\n", logs);
   fprintf(output_stream, "  STATUS CODE'S LOGS:\n    ");
 
   if (*pStatus_codes) {

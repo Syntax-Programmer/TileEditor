@@ -233,7 +233,8 @@ Enum_StatusCodes ParseFileToData(Struct_TileHashNode **tile_hash_arr,
       for (int i = 0; i < LINES_PER_RECT; i++) {
         if (!fgets(buffer, MAX_LINE_SIZE, file) && !feof(file)) {
           status = FILE_IO_ERROR | HIGH_SEVERITY_ERROR;
-          Logger(&status, NULL, "Error produced by ParseFileToData()", stderr);
+          Logger(&status, NULL, "Error produced by ParseFileToData()",
+                 OUTPUT_LOG_STREAM);
           fclose(file);
           return status;
         }

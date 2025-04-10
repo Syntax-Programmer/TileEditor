@@ -20,7 +20,8 @@ extern Enum_StatusCodes AccessTileHashMap(int32_t x, int32_t y,
 extern Enum_StatusCodes
 PopTileHashMapEntry(int32_t x, int32_t y, Struct_TileHashNode **tile_hash_arr);
 
-extern Enum_StatusCodes DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
-                                       const char *file_path);
+extern Enum_StatusCodes
+DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
+               const char *file_path);
 extern Enum_StatusCodes ParseFileToData(Struct_TileHashNode **tile_hash_arr,
                                         const char *file_path);
