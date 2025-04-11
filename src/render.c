@@ -11,13 +11,23 @@ RenderInputWidgets(SDL_Renderer *renderer,
 static void RenderGrid(SDL_Renderer *renderer,
                        Struct_TileHashNode **tile_hash_arr,
                        int32_t move_x_offset, int32_t move_y_offset) {
-  SDL_Rect rect = {.w = TILE_SIZE, .h = TILE_SIZE};
+  SDL_Rect rect = {.w = grid_size, .h = grid_size};
   Struct_TileHashNode *temp = NULL;
 
-  for (int i = 0; i < GRID_HEIGHT; i += TILE_SIZE) {
-    for (int j = 0; j < GRID_WIDTH; j += TILE_SIZE) {
-      rect.y = i;
-      rect.x = j;
+  /*
+  Using this way, when zooming in, the grid cuts off without covering the
+  screen.
+
+  Fixing this using the way of +1 rows and +1 cols than calculated is not viable
+  as doing it will take unallocated space on screen and also may coverup some
+  widgets.
+  */
+  uint32_t rows = GRID_HEIGHT / grid_size, cols = GRID_WIDTH / grid_size;
+
+  for (uint32_t i = 0; i < rows; i++) {
+    for (uint32_t j = 0; j < cols; j++) {
+      rect.y = i * grid_size;
+      rect.x = j * grid_size;
       if (AccessTileHashMap(j + move_x_offset, i + move_y_offset, tile_hash_arr,
                             &temp) == SUCCESS) {
         SDL_SetRenderDrawColor(renderer, temp->r, temp->g, temp->b, 255);
@@ -33,7 +43,7 @@ static void RenderGrid(SDL_Renderer *renderer,
 static void
 RenderInputWidgets(SDL_Renderer *renderer,
                    const Struct_InputWidgetState *pInput_widget_state) {
-  for (int i = 0; i < MAX_WIDGETS; i++) {
+  for (int32_t i = 0; i < MAX_WIDGETS; i++) {
     if (pInput_widget_state->widgets[i].texture) {
       SDL_RenderCopy(renderer, pInput_widget_state->widgets[i].texture, NULL,
                      &pInput_widget_state->widgets[i].pos);

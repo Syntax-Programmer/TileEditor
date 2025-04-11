@@ -13,6 +13,8 @@ typedef enum Enum_Inputs {
   ENTER = 1 << 5,
   QUIT = 1 << 6,
   MSB = 1 << 7,
+  SCROLL_UP = 1 << 8,
+  SCROLL_DOWN = 1 << 9
 } Enum_Inputs;
 
 extern Enum_Inputs GetInput(uint32_t *pRecorded_mouse_click_x,

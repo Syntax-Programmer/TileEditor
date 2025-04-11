@@ -10,8 +10,8 @@ Enum_StatusCodes PointRectCollision(SDL_Rect *pRect, int32_t point_x,
   return FAILURE;
 }
 
-void GetGridPos(uint32_t screen_x, uint32_t screen_y, uint32_t *pGrid_x,
-                uint32_t *pGrid_y) {
-  *pGrid_x = (screen_x / TILE_SIZE) * TILE_SIZE;
-  *pGrid_y = (screen_y / TILE_SIZE) * TILE_SIZE;
+void GetGridIndex(uint32_t screen_x, uint32_t screen_y, uint32_t *pGrid_x_index,
+                  uint32_t *pGrid_y_index) {
+  *pGrid_x_index = (screen_x / grid_size);
+  *pGrid_y_index = (screen_y / grid_size);
 }

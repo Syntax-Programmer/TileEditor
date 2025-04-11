@@ -1,5 +1,7 @@
 #include "../include/common.h"
 
+uint32_t grid_size = TILE_SIZE;
+
 void Logger(Enum_StatusCodes *pStatus_codes,
             const char *(*extra_logs_callback)(void), const char *logs,
             FILE *output_stream) {
@@ -20,7 +22,8 @@ void Logger(Enum_StatusCodes *pStatus_codes,
   }
 
   fprintf(output_stream, "\nLOGS:\n");
-  fprintf(output_stream, "  FUNCTION CALLBACK'S LOGS:\n    %s\n", callback_logs);
+  fprintf(output_stream, "  FUNCTION CALLBACK'S LOGS:\n    %s\n",
+          callback_logs);
   fprintf(output_stream, "  LOGS:\n    %s\n", logs);
   fprintf(output_stream, "  STATUS CODE'S LOGS:\n    ");
 

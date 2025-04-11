@@ -41,7 +41,7 @@ Enum_StatusCodes InitTileHashMap(Struct_TileHashNode ***pTile_hash_arr) {
 void FreeTileHashMap(Struct_TileHashNode ***pTile_hash_arr) {
   Struct_TileHashNode *temp;
 
-  for (int i = 0; i < HASH_BUCKET_SIZE; i++) {
+  for (int32_t i = 0; i < HASH_BUCKET_SIZE; i++) {
     while ((*pTile_hash_arr)[i]) {
       temp = (*pTile_hash_arr)[i]->next;
       free((*pTile_hash_arr)[i]);
@@ -131,9 +131,11 @@ Enum_StatusCodes DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
   }
 
   int32_t vert_c = 0;
-  for (int i = 0; i < HASH_BUCKET_SIZE; i++) {
+  for (int32_t i = 0; i < HASH_BUCKET_SIZE; i++) {
     Struct_TileHashNode *curr = tile_hash_arr[i];
     while (curr) {
+      int32_t global_x_pos = curr->x * TILE_SIZE,
+              global_y_pos = curr->y * TILE_SIZE;
       fprintf(file,
               "\nv %d %d %d %d %d\n"
               "v %d %d %d %d %d\n"
@@ -141,11 +143,12 @@ Enum_StatusCodes DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
               "v %d %d %d %d %d\n"
               "i %d %d %d\n"
               "i %d %d %d\n",
-              curr->x, curr->y, curr->r, curr->g, curr->b, curr->x + TILE_SIZE,
-              curr->y, curr->r, curr->g, curr->b, curr->x, curr->y + TILE_SIZE,
-              curr->r, curr->g, curr->b, curr->x + TILE_SIZE,
-              curr->y + TILE_SIZE, curr->r, curr->g, curr->b, vert_c + 0,
-              vert_c + 1, vert_c + 3, vert_c + 0, vert_c + 2, vert_c + 3);
+              global_x_pos, global_y_pos, curr->r, curr->g, curr->b,
+              global_x_pos + TILE_SIZE, global_y_pos, curr->r, curr->g, curr->b,
+              global_x_pos, global_y_pos + TILE_SIZE, curr->r, curr->g, curr->b,
+              global_x_pos + TILE_SIZE, global_y_pos + TILE_SIZE, curr->r,
+              curr->g, curr->b, vert_c + 0, vert_c + 1, vert_c + 3, vert_c + 0,
+              vert_c + 2, vert_c + 3);
       curr = curr->next;
       vert_c += 4;
     }
@@ -199,7 +202,8 @@ Enum_StatusCodes ParseVDataLine(char *data_line,
     return status;
   }
 
-  return AddTileHashMapEntry(x, y, r, g, b, tile_hash_arr);
+  return AddTileHashMapEntry(x / TILE_SIZE, y / TILE_SIZE, r, g, b,
+                             tile_hash_arr);
 }
 
 Enum_StatusCodes ParseFileToData(Struct_TileHashNode **tile_hash_arr,
@@ -230,7 +234,7 @@ Enum_StatusCodes ParseFileToData(Struct_TileHashNode **tile_hash_arr,
       }
       // Digesting vertices and indices that makeup the rect and just directly
       // building it here. Assuming data correctness.
-      for (int i = 0; i < LINES_PER_RECT; i++) {
+      for (int32_t i = 0; i < LINES_PER_RECT; i++) {
         if (!fgets(buffer, MAX_LINE_SIZE, file) && !feof(file)) {
           status = FILE_IO_ERROR | HIGH_SEVERITY_ERROR;
           Logger(&status, NULL, "Error produced by ParseFileToData()",

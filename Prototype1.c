@@ -311,7 +311,7 @@ static void FreeTileHashMap(Struct_TileNode ***pTile_hash_arr) {
   if (pTile_hash_arr && *pTile_hash_arr) {
     Struct_TileNode *temp;
 
-    for (int i = 0; i < HASH_BUCKET_SIZE; i++) {
+    for (int32_t i = 0; i < HASH_BUCKET_SIZE; i++) {
       while ((*pTile_hash_arr)[i]) {
         temp = (*pTile_hash_arr)[i]->next;
         free((*pTile_hash_arr)[i]);
@@ -422,7 +422,7 @@ static Enum_StatusCodes DumpDataToFile(Struct_TileNode **tile_hash_arr,
   }
 
   int32_t vert_c = 0;
-  for (int i = 0; i < HASH_BUCKET_SIZE; i++) {
+  for (int32_t i = 0; i < HASH_BUCKET_SIZE; i++) {
     Struct_TileNode *curr = tile_hash_arr[i];
     while (curr) {
       fprintf(file,
@@ -523,7 +523,7 @@ static Enum_StatusCodes ParseFileToData(Struct_TileNode **tile_hash_arr,
       }
       // Digesting vertices and indices that makeup the rect and just directly
       // building it here. Assuming data correctness.
-      for (int i = 0; i < LINES_PER_RECT; i++) {
+      for (int32_t i = 0; i < LINES_PER_RECT; i++) {
         if (!fgets(buffer, MAX_LINE_SIZE, file) && !feof(file)) {
           Logger(FILE_IO_ERROR | HIGH_SEVERITY_ERROR, NULL,
                  "Error produced by ParseFileToData()", stderr);
@@ -744,8 +744,8 @@ static void RenderGrid(SDL_Renderer *renderer, Struct_TileNode **tile_hash_arr,
   SDL_Rect rect = {.w = TILE_SIZE, .h = TILE_SIZE};
   Struct_TileNode *temp;
 
-  for (int i = 0; i < GRID_HEIGHT; i += TILE_SIZE) {
-    for (int j = 0; j < GRID_WIDTH; j += TILE_SIZE) {
+  for (int32_t i = 0; i < GRID_HEIGHT; i += TILE_SIZE) {
+    for (int32_t j = 0; j < GRID_WIDTH; j += TILE_SIZE) {
       rect.y = i;
       rect.x = j;
       if ((temp = AccessTileHashMap(j + move_x_offset, i + move_y_offset,
@@ -1128,8 +1128,8 @@ TODO: Add comments to each function that expects the caller to give valid
 TODO: Add a UI state to select the tile size, also add zooming in/out.
 
 Potential refactor: input grabber uses 1 byte to store the digit input's char
-when editing rgb. Modify it to use 4 bits to store actual int value ranging
-from 0-9. As we need to convert it to int regardless as the digit char is
+when editing rgb. Modify it to use 4 bits to store actual int32_t value ranging
+from 0-9. As we need to convert it to int32_t regardless as the digit char is
 useless to us.
 
 Refactor code.

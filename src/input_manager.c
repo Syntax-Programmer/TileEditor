@@ -14,6 +14,12 @@ Enum_Inputs GetInput(uint32_t *pRecorded_mouse_click_x,
       SET_FLAG(input_flags, MSB);
       *pRecorded_mouse_click_x = event.button.x;
       *pRecorded_mouse_click_y = event.button.y;
+    } else if (event.type == SDL_MOUSEWHEEL) {
+      if (event.wheel.y > 0) {
+        SET_FLAG(input_flags, SCROLL_UP);
+      } else if (event.wheel.y < 0) {
+        SET_FLAG(input_flags, SCROLL_DOWN);
+      }
     } else if (event.type == SDL_KEYDOWN) {
       /*
       Inputs that we want the user to press each time will not be checked for

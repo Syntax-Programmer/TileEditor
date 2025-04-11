@@ -34,6 +34,11 @@
 #define FRAME_DELAY (1000 / MAX_FPS)
 #define INPUT_DELAY 75
 
+#define GRID_DELTA_SIZE 2
+#define GRID_ZOOM_OUT_LIMIT 10
+#define GRID_ZOOM_IN_LIMIT 200
+extern uint32_t grid_size;
+
 typedef enum Enum_StatusCodes {
   // General states of a function that don't contribute in logging.
   SUCCESS = 0,
