@@ -11,7 +11,6 @@
 
 #define GRID_WIDTH 800
 #define GRID_HEIGHT 800
-#define TILE_SIZE 50
 
 #define SET_FLAG(var, flag) ((var) |= (flag))
 #define CLEAR_FLAG(var, flag) ((var) &= ~(flag))

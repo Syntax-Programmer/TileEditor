@@ -22,7 +22,10 @@ static Enum_StatusCodes InitApp(SDL_Window **pWindow, SDL_Renderer **pRenderer,
     return FAILURE;
   }
 
-  if (ParseFileToData(*pTile_hash_arr, FILE_TO_WORK_ON)) {
+  if (ParseFileToData(
+          *pTile_hash_arr, FILE_TO_WORK_ON,
+          (uint32_t)pInput_widget_state->widgets[TILE_SIZE_WIDGET_INDEX]
+              .Value.int_val)) {
     return FAILURE;
   }
 
@@ -56,9 +59,13 @@ static void ExitApp(SDL_Window **pWindow, SDL_Renderer **pRenderer,
                     TTF_Font **pFont, Struct_TileHashNode ***pTile_hash_arr,
                     Struct_InputWidgetState *pInput_widget_state) {
   // If dumping fails, its way before the file was even opend, so no data loss.
-  DumpDataToFile(*pTile_hash_arr, FILE_TO_WORK_ON);
+  DumpDataToFile(*pTile_hash_arr, FILE_TO_WORK_ON,
+                 (uint32_t)pInput_widget_state->widgets[TILE_SIZE_WIDGET_INDEX]
+                     .Value.int_val);
   FreeTileHashMap(pTile_hash_arr);
+
   ExitInputWidgetState(pInput_widget_state);
+
   ExitTTF(pFont);
   ExitSDL(pWindow, pRenderer);
 }

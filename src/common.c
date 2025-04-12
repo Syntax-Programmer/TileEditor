@@ -1,6 +1,6 @@
 #include "../include/common.h"
 
-uint32_t grid_size = TILE_SIZE;
+uint32_t grid_size = 50;
 
 void Logger(Enum_StatusCodes *pStatus_codes,
             const char *(*extra_logs_callback)(void), const char *logs,

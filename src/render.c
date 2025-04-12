@@ -1,5 +1,8 @@
 #include "../include/render.h"
 
+static SDL_Rect OUTSIDE_GRID = {
+    .x = GRID_WIDTH, .y = 0, .w = APP_WIDTH - GRID_WIDTH, .h = APP_HEIGHT};
+
 static void RenderGrid(SDL_Renderer *renderer,
                        Struct_TileHashNode **tile_hash_arr,
                        int32_t move_x_offset, int32_t move_y_offset);
@@ -22,7 +25,8 @@ static void RenderGrid(SDL_Renderer *renderer,
   as doing it will take unallocated space on screen and also may coverup some
   widgets.
   */
-  uint32_t rows = GRID_HEIGHT / grid_size, cols = GRID_WIDTH / grid_size;
+  uint32_t rows = (GRID_HEIGHT / grid_size) + 1,
+           cols = (GRID_WIDTH / grid_size) + 1;
 
   for (uint32_t i = 0; i < rows; i++) {
     for (uint32_t j = 0; j < cols; j++) {
@@ -57,6 +61,10 @@ void Render(SDL_Renderer *renderer, Struct_TileHashNode **tile_hash_arr,
   SDL_RenderClear(renderer);
 
   RenderGrid(renderer, tile_hash_arr, move_x_offset, move_y_offset);
+
+  SDL_SetRenderDrawColor(renderer, WHITISH, 255);
+  SDL_RenderFillRect(renderer, &OUTSIDE_GRID);
+
   RenderInputWidgets(renderer, pInput_widget_state);
 
   SDL_SetRenderDrawColor(

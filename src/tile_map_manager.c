@@ -13,7 +13,8 @@
 
 static uint32_t KnuthMultiplicativeHash(int32_t x, int32_t y);
 static Enum_StatusCodes ParseVDataLine(char *data_line,
-                                       Struct_TileHashNode **tile_hash_arr);
+                                       Struct_TileHashNode **tile_hash_arr,
+                                       uint32_t tile_size);
 
 static uint32_t KnuthMultiplicativeHash(int32_t x, int32_t y) {
   uint32_t ux = (uint32_t)x * KNUTHS_X_MULTIPLIER;
@@ -119,7 +120,7 @@ Enum_StatusCodes PopTileHashMapEntry(int32_t x, int32_t y,
 }
 
 Enum_StatusCodes DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
-                                const char *file_path) {
+                                const char *file_path, uint32_t tile_size) {
   Enum_StatusCodes status = SUCCESS;
 
   FILE *file = fopen(file_path, "w");
@@ -134,8 +135,8 @@ Enum_StatusCodes DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
   for (int32_t i = 0; i < HASH_BUCKET_SIZE; i++) {
     Struct_TileHashNode *curr = tile_hash_arr[i];
     while (curr) {
-      int32_t global_x_pos = curr->x * TILE_SIZE,
-              global_y_pos = curr->y * TILE_SIZE;
+      int32_t global_x_pos = curr->x * tile_size,
+              global_y_pos = curr->y * tile_size;
       fprintf(file,
               "\nv %d %d %d %d %d\n"
               "v %d %d %d %d %d\n"
@@ -144,9 +145,9 @@ Enum_StatusCodes DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
               "i %d %d %d\n"
               "i %d %d %d\n",
               global_x_pos, global_y_pos, curr->r, curr->g, curr->b,
-              global_x_pos + TILE_SIZE, global_y_pos, curr->r, curr->g, curr->b,
-              global_x_pos, global_y_pos + TILE_SIZE, curr->r, curr->g, curr->b,
-              global_x_pos + TILE_SIZE, global_y_pos + TILE_SIZE, curr->r,
+              global_x_pos + tile_size, global_y_pos, curr->r, curr->g, curr->b,
+              global_x_pos, global_y_pos + tile_size, curr->r, curr->g, curr->b,
+              global_x_pos + tile_size, global_y_pos + tile_size, curr->r,
               curr->g, curr->b, vert_c + 0, vert_c + 1, vert_c + 3, vert_c + 0,
               vert_c + 2, vert_c + 3);
       curr = curr->next;
@@ -159,7 +160,8 @@ Enum_StatusCodes DumpDataToFile(Struct_TileHashNode **tile_hash_arr,
 }
 
 Enum_StatusCodes ParseVDataLine(char *data_line,
-                                Struct_TileHashNode **tile_hash_arr) {
+                                Struct_TileHashNode **tile_hash_arr,
+                                uint32_t tile_size) {
   Enum_StatusCodes status = SUCCESS;
   char *token = strtok(&data_line[2], " \n");
   uint32_t i = 0;
@@ -202,12 +204,12 @@ Enum_StatusCodes ParseVDataLine(char *data_line,
     return status;
   }
 
-  return AddTileHashMapEntry(x / TILE_SIZE, y / TILE_SIZE, r, g, b,
+  return AddTileHashMapEntry(x / tile_size, y / tile_size, r, g, b,
                              tile_hash_arr);
 }
 
 Enum_StatusCodes ParseFileToData(Struct_TileHashNode **tile_hash_arr,
-                                 const char *file_path) {
+                                 const char *file_path, uint32_t tile_size) {
   Enum_StatusCodes status = SUCCESS;
   FILE *file = fopen(file_path, "r");
 
@@ -228,7 +230,8 @@ Enum_StatusCodes ParseFileToData(Struct_TileHashNode **tile_hash_arr,
         ;
       continue;
     } else if (buffer[0] == 'v' && buffer[1] == ' ') {
-      if ((status = ParseVDataLine(buffer, tile_hash_arr)) != SUCCESS) {
+      if ((status = ParseVDataLine(buffer, tile_hash_arr, tile_size)) !=
+          SUCCESS) {
         fclose(file);
         return status;
       }

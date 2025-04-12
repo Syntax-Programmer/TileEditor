@@ -5,12 +5,12 @@
 #include <SDL2/SDL_ttf.h>
 
 #define WIDGET_CHARACTER_LIMIT 128
-#define MAX_WIDGETS 3
+#define MAX_WIDGETS 4
 
 #define R_WIDGET_INDEX 0
 #define G_WIDGET_INDEX 1
 #define B_WIDGET_INDEX 2
-#define RGB_VAL_LIMIT 0x00FF
+#define TILE_SIZE_WIDGET_INDEX 3
 
 typedef struct Struct_InputWidget {
   char title[WIDGET_CHARACTER_LIMIT];

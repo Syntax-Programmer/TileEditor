@@ -208,6 +208,10 @@ InitInputWidgetState(Struct_InputWidgetState *pInput_widget_state,
       pInput_widget_state->widgets[G_WIDGET_INDEX].pos.y +
           pInput_widget_state->widgets[G_WIDGET_INDEX].pos.h + 5,
       "B: ", NULL, &widget_0_to_2_default_val);
+  status |= CreateInputWidget(
+      &pInput_widget_state->widgets[TILE_SIZE_WIDGET_INDEX], font, renderer,
+      BLACKISH, COLOR_RECT.x + COLOR_RECT.w + 40, COLOR_RECT.y,
+      "TileSize: ", NULL, (int32_t *)&grid_size);
   /*
   Returning state instead of just returning like func1() || func2().
   This is to avoid boolean short circuiting if one fails, which will prevent
